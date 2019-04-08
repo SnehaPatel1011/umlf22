@@ -1,0 +1,17 @@
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+  - name: Run my lambda
+    execute_lambda:
+      region: "us-east-1"
+      name: my_lambda
+      payload:
+        arg1: foo
+        arg2: bar
+      wait: true
+    register: my_lambda
+  - debug:
+      msg: "{{ my_lambda }}"
+

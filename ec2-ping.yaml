@@ -1,0 +1,6 @@
+---
+
+- hosts: tag_Name_Demo
+  gather_facts: false
+  tasks:
+    - ping:

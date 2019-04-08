@@ -1,0 +1,11 @@
+- hosts: tag_Name_Demo
+  connection: local
+  gather_facts: False
+
+  tasks:
+    - name: Gather EC2 facts
+      ec2_instance_facts:
+        region: "us-east-1"
+      register: ec2_metadata
+    - debug: msg="{{ ec2_metadata.instances.msg}}"
+

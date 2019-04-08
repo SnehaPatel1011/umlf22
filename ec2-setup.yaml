@@ -1,0 +1,24 @@
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+
+    - name: Provision a set of instances
+      vars:
+         ami_id: "ami-6871a115"
+      ec2:
+         region: "us-east-1"
+         key_name: dlambright_s14
+         group: launch-wizard-7
+         instance_type: t2.micro
+         assign_public_ip: yes
+         vpc_subnet_id: subnet-d37640ec
+         image: "{{ ami_id }}"
+         wait: true
+         exact_count: 5
+         count_tag:
+            Name: Demo
+         instance_tags:
+            Name: Demo
+      register: ec2

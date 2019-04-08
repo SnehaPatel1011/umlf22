@@ -1,0 +1,18 @@
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+
+    - name: Provision a set of instances
+      lambda:
+        region: "us-east-1"
+        state: present
+        name: my_lambda
+        zip_file: lambda.py.zip
+        role: "lambda"
+        runtime: python2.7
+        handler: lambda.my_lambda
+        tags:
+          'responsible party': nwatson@example.com
+

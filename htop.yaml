@@ -1,0 +1,7 @@
+- hosts: uml
+  tasks:
+    - name: Download htop
+      yum:
+        name: htop 
+        state: latest
+      become: yes
