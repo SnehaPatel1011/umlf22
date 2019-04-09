@@ -14,5 +14,5 @@
         runtime: python2.7
         handler: lambda.my_lambda
         tags:
-          'responsible party': nwatson@example.com
+          'responsible party': uml@example.com
 
