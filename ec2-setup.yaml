@@ -22,3 +22,12 @@
          instance_tags:
             Name: Demo
       register: ec2
+- name: Configure instances
+  hosts: tag_Name_Demo
+  gather_facts: false
+  tasks:
+    - name: work
+      yum:
+        name: screen
+        state: latest
+      become: yes
