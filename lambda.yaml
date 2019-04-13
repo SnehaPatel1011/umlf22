@@ -4,13 +4,13 @@
 
   tasks:
 
-    - name: Provision a set of instances
+    - name: run lambda function
       lambda:
         region: "us-east-1"
         state: present
         name: my_lambda
         zip_file: lambda.py.zip
-        role: "lambda"
+        role: "basic_lambda_role"
         runtime: python2.7
         handler: lambda.my_lambda
         tags:
