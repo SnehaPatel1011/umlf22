@@ -2,5 +2,5 @@
 - hosts: uml
   tasks:
     - name: Copy a file
-      copy: src=~/test.txt dest=~/test_copy_new.txt mode=0644
+      copy: src=~/test.txt dest=~/test_copy.txt mode=0644
   
