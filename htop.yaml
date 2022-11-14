@@ -1,6 +1,6 @@
 - hosts: uml
   tasks:
-    - name: Download htop
+    - name: Download htop example
       yum:
         name: htop 
         state: latest
