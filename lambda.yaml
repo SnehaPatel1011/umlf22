@@ -11,7 +11,7 @@
         name: my_lambda
         zip_file: lambda.py.zip
         role: "basic_lambda_role"
-        runtime: python2.7
+        runtime: python3.7
         handler: lambda.my_lambda
         tags:
           'responsible party': uml@example.com
