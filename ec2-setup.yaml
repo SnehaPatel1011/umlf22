@@ -1,39 +1,40 @@
+---
 - hosts: localhost
   connection: local
   gather_facts: False
-
   tasks:
-
     - name: Provision a set of instances
-      vars:
-         ami_id: "ami-6871a115"
-      ec2:
-         region: "us-east-1"
-         key_name: dlambright_s14
-         group: launch-wizard-7
-         instance_type: t2.micro
-         assign_public_ip: yes
-         vpc_subnet_id: subnet-d37640ec
-         image: "{{ ami_id }}"
-         wait: true
-         exact_count: 2
-         count_tag:
-            Name: Demo
-         instance_tags:
-            Name: Demo
-      register: ec2
-    - debug:
-        msg: "System {{ ec2.instances }}"
+      amazon.aws.ec2_instance:
+        region: "us-east-1"
+        key_name: dlambright_s14
+        count: 2
+        security_group: launch-wizard-7
+        instance_type: t2.micro
+        network:
+          assign_public_ip: true
+        vpc_subnet_id: subnet-d37640ec
+        image:
+          id: "ami-025219984d88a5203"
+        wait: true
+        tags:
+          Name: Demo
 
-    - name: Add new instance to host group
+    - name: find all instances with tag Demo that are running or pending
+      amazon.aws.ec2_instance_info:
+        filters:
+          "tag:Name": "Demo"
+          instance-state-name: ["running", "pending"]
+      register: ec2
+
+    - name: add all found instances to hostgroup
       add_host:
-        hostname: "{{ item.public_ip }}"
+        hostname: "{{ item.public_ip_address }}"
         groupname: launched
       with_items: "{{ ec2.instances }}"
 
     - name: Wait for SSH to come up
       wait_for:
-        host: "{{ item.public_ip }}"
+        host: "{{ item.public_ip_address }}"
         port: 22
         state: started
       with_items: "{{ ec2.instances }}"
@@ -46,4 +47,3 @@
         name: screen
         state: latest
       become: yes
-
